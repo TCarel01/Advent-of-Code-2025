@@ -14,3 +14,6 @@ C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\obj\Debug\ne
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\obj\Debug\net9.0\Advent of Code 2025.genruntimeconfig.cache
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\obj\Debug\net9.0\ref\Advent of Code 2025.dll
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day1test.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day2.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day2test.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\obj\Debug\net9.0\Advent of Code 2025.sourcelink.json
