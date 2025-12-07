@@ -25,3 +25,5 @@ C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\ne
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day5test.txt
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day6.txt
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day6test.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day7.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day7test.txt
