@@ -46,29 +46,30 @@ namespace Advent_of_Code_2025.Days
                 coord.Reverse();
             }
 
-            var test = GetPerimeter(coords);
+            var perimeterDict = GetPerimeter(coords);
+
+            var perimeterCache = new Dictionary<(int, int, string), int>();
 
             long maxArea = 0;
 
-            int coord1Idx = 0;
-            foreach (var coord1 in coords)
+            for (int i = 0; i < coords.Count; ++i)
             {
-                int coord2Idx = 0;
-                foreach (var coord2 in coords)
+                var coord1 = coords[i];
+                for (int j = i; j < coords.Count; ++j)
                 {
+                    var coord2 = coords[j];
                     int width = Math.Abs(coord1[1] - coord2[1]) + 1;
                     int height = Math.Abs(coord1[0] - coord2[0]) + 1;
 
-                    maxArea = CheckRectangleIsValid(coord1, coord2, test) ? Math.Max((long)width * (long)height, maxArea) : maxArea;
-                    coord2Idx++;
+                    maxArea = CheckRectangleIsValid(coord1, coord2, perimeterDict, perimeterCache) ? Math.Max((long)width * (long)height, maxArea) : maxArea;
                 }
-                coord1Idx++;
+
             }
 
             return maxArea;
         }
 
-        public bool CheckRectangleIsValid(List<int> point1, List<int> point2, Dictionary<(int, int), string> perimeter)
+        public bool CheckRectangleIsValid(List<int> point1, List<int> point2, Dictionary<(int, int), string> perimeter, Dictionary<(int, int, string), int> perimeterCache)
         {
             // for now i'm disregarding rectangles of width 1 as I think it's unlikely this will have the maximum width, come back and fix this later
             if (point1[0] == point2[0] || point1[1] == point2[1])
@@ -119,41 +120,122 @@ namespace Advent_of_Code_2025.Days
 
             if (topLeftCorner != null)
             {
-                var xCoordListTL = perimeterList.Where(e => e.Key.Item2 == topLeftCorner[1] && e.Key.Item1 > topLeftCorner[0] && (e.Value == "DL" || e.Value == "UD"));
+                int topLeftXValidInt = -1;
+                int topLeftYValidInt = -1;
+                int bottomRightXValidInt = -1;
+                int bottomRightYValidInt = -1;
 
-                bool topLeftXValid = xCoordListTL.Any() && xCoordListTL.Select(e => e.Key.Item1).Min() >= bottomRightCorner[0];
+                if (perimeterCache.ContainsKey((topLeftCorner[0], topLeftCorner[1], "TLX")))
+                {
+                    topLeftXValidInt = perimeterCache[(topLeftCorner[0], topLeftCorner[1], "TLX")];
+                }
+                else
+                {
+                    var xCoordListTL = perimeterList.Where(e => e.Key.Item2 == topLeftCorner[1] && e.Key.Item1 > topLeftCorner[0] && (e.Value == "DL" || e.Value == "UD"));
+                    topLeftXValidInt = xCoordListTL.Any() ? xCoordListTL.Select(e => e.Key.Item1).Min() : -1;
+                    perimeterCache.Add((topLeftCorner[0], topLeftCorner[1], "TLX"), topLeftXValidInt);
 
-                var yCoordListTL = perimeterList.Where(e => e.Key.Item1 == topLeftCorner[0] && e.Key.Item2 > topLeftCorner[1] && (e.Value == "UR" || e.Value == "LR"));
+                }
 
-                bool topLeftYValid = yCoordListTL.Any() && yCoordListTL.Select(e => e.Key.Item2).Min() >= bottomRightCorner[1];
+                if (perimeterCache.ContainsKey((topLeftCorner[0], topLeftCorner[1], "TLY")))
+                {
+                    topLeftYValidInt = perimeterCache[(topLeftCorner[0], topLeftCorner[1], "TLY")];
+                }
+                else
+                {
+                    var yCoordListTL = perimeterList.Where(e => e.Key.Item1 == topLeftCorner[0] && e.Key.Item2 > topLeftCorner[1] && (e.Value == "UR" || e.Value == "LR"));
+                    topLeftYValidInt = yCoordListTL.Any() ? yCoordListTL.Select(e => e.Key.Item2).Min() : -1;
+                    perimeterCache.Add((topLeftCorner[0], topLeftCorner[1], "TLY"), topLeftYValidInt);
+                }  
+                
+                if (perimeterCache.ContainsKey((bottomRightCorner[0], bottomRightCorner[1], "BRX")))
+                {
+                    bottomRightXValidInt = perimeterCache[(bottomRightCorner[0], bottomRightCorner[1], "BRX")];
+                }
+                else
+                {
+                    var xCoordListBR = perimeterList.Where(e => e.Key.Item2 == bottomRightCorner[1] && e.Key.Item1 < bottomRightCorner[0] && (e.Value == "UD" || e.Value == "UR"));
+                    bottomRightXValidInt = xCoordListBR.Any() ? xCoordListBR.Select(e => e.Key.Item1).Max() : -1;
+                    perimeterCache.Add((bottomRightCorner[0], bottomRightCorner[1], "BRX"), bottomRightXValidInt);
+                }
 
-                var xCoordListBR = perimeterList.Where(e => e.Key.Item2 == bottomRightCorner[1] && e.Key.Item1 < bottomRightCorner[0] && (e.Value == "UD" || e.Value == "UR"));
+                
+                if (perimeterCache.ContainsKey((bottomRightCorner[0], bottomRightCorner[1], "BRY")))
+                {
+                    bottomRightYValidInt = perimeterCache[(bottomRightCorner[0], bottomRightCorner[1], "BRY")];
+                }
+                else
+                {
+                    var yCoordListBR = perimeterList.Where(e => e.Key.Item1 == bottomRightCorner[0] && e.Key.Item2 < bottomRightCorner[1] && (e.Value == "LR" || e.Value == "DL"));
+                    bottomRightYValidInt = yCoordListBR.Any() ? yCoordListBR.Select(e => e.Key.Item2).Max() : -1;
+                    perimeterCache.Add((bottomRightCorner[0], bottomRightCorner[1], "BRY"), bottomRightYValidInt);
+                }
 
-                bool bottomRightXValid = xCoordListBR.Any() && xCoordListBR.Select(e => e.Key.Item1).Max() <= topLeftCorner[0];
 
-                var yCoordListBR = perimeterList.Where(e => e.Key.Item1 == bottomRightCorner[0] && e.Key.Item2 < bottomRightCorner[1] && (e.Value == "LR" || e.Value == "DL"));
+                bool topLeftXValid = topLeftXValidInt != -1 && topLeftXValidInt >= bottomRightCorner[0];
 
-                bool bottomRightYValid = yCoordListBR.Any() && yCoordListBR.Select(e => e.Key.Item2).Max() <= topLeftCorner[1];
+                bool topLeftYValid = topLeftYValidInt != -1 && topLeftYValidInt >= bottomRightCorner[1];
+
+                bool bottomRightXValid = bottomRightXValidInt != -1 && bottomRightXValidInt <= topLeftCorner[0];
+
+                bool bottomRightYValid = bottomRightYValidInt != -1 && bottomRightYValidInt <= topLeftCorner[1];
 
                 return topLeftXValid && topLeftYValid && bottomRightXValid && bottomRightYValid;
             }
             else
             {
-                var xCoordListTR = perimeterList.Where(e => e.Key.Item2 == topRightCorner[1] && e.Key.Item1 < topRightCorner[0] && (e.Value == "DR" || e.Value == "UD"));
+                int topRightXValidInt = -1;
+                int topRightYValidInt = -1;
+                int bottomLeftXValidInt = -1;
+                int bottomLeftYValidInt = -1;
 
-                bool topRightXValid = xCoordListTR.Any() && xCoordListTR.Select(e => e.Key.Item1).Max() <= bottomLeftCorner[0];
+                if (perimeterCache.ContainsKey((topRightCorner[0], topRightCorner[1], "TRX")))
+                {
+                    topRightXValidInt = perimeterCache[(topRightCorner[0], topRightCorner[1], "TRX")];
+                }
+                else
+                {
+                    var xCoordListTR = perimeterList.Where(e => e.Key.Item2 == topRightCorner[1] && e.Key.Item1 < topRightCorner[0] && (e.Value == "DR" || e.Value == "UD"));
+                    topRightXValidInt = xCoordListTR.Any() ? xCoordListTR.Select(e => e.Key.Item1).Max() : -1;
+                    perimeterCache.Add((topRightCorner[0], topRightCorner[1], "TRX"), topRightXValidInt);
+                }
 
-                var yCoordListTR = perimeterList.Where(e => e.Key.Item1 == topRightCorner[0] && e.Key.Item2 > topRightCorner[1] && (e.Value == "LR" || e.Value == "UL"));
+                if (perimeterCache.ContainsKey((topRightCorner[0], topRightCorner[1], "TRY")))
+                {
+                    topRightYValidInt = perimeterCache[(topRightCorner[0], topRightCorner[1], "TRY")];
+                }
+                else
+                {
+                    var yCoordListTR = perimeterList.Where(e => e.Key.Item1 == topRightCorner[0] && e.Key.Item2 > topRightCorner[1] && (e.Value == "LR" || e.Value == "UL"));
+                    topRightYValidInt = yCoordListTR.Any() ? yCoordListTR.Select(e => e.Key.Item2).Min() : -1;
+                    perimeterCache.Add((topRightCorner[0], topRightCorner[1], "TRY"), topRightYValidInt);
+                }
 
-                bool topRightYValid = yCoordListTR.Any() && yCoordListTR.Select(e => e.Key.Item2).Min() >= bottomLeftCorner[1];
+                if (perimeterCache.ContainsKey((bottomLeftCorner[0], bottomLeftCorner[1], "BLX")))
+                {
+                    bottomLeftXValidInt = perimeterCache[(bottomLeftCorner[0], bottomLeftCorner[1], "BLX")];
+                }
+                else
+                {
+                    var xCoordListBL = perimeterList.Where(e => e.Key.Item2 == bottomLeftCorner[1] && e.Key.Item1 > bottomLeftCorner[0] && (e.Value == "UD" || e.Value == "UL"));
+                    bottomLeftXValidInt = xCoordListBL.Any() ? xCoordListBL.Select(e => e.Key.Item1).Min() : -1;
+                    perimeterCache.Add((bottomLeftCorner[0], bottomLeftCorner[1], "BLX"), bottomLeftXValidInt);
+                }
 
-                var xCoordListBL = perimeterList.Where(e => e.Key.Item2 == bottomLeftCorner[1] && e.Key.Item1 > bottomLeftCorner[0] && (e.Value == "UD" || e.Value == "UL"));
+                if (perimeterCache.ContainsKey((bottomLeftCorner[0], bottomLeftCorner[1], "BLY")))
+                {
+                    bottomLeftYValidInt = perimeterCache[(bottomLeftCorner[0], bottomLeftCorner[1], "BLY")];
+                }
+                else
+                {
+                    var yCoordListBL = perimeterList.Where(e => e.Key.Item1 == bottomLeftCorner[0] && e.Key.Item2 < bottomLeftCorner[1] && (e.Value == "DR" || e.Value == "LR"));
+                    bottomLeftYValidInt = yCoordListBL.Any() ? yCoordListBL.Select(e => e.Key.Item2).Max() : -1;
+                }
 
-                bool bottomLeftXValid = xCoordListBL.Any() && xCoordListBL.Select(e => e.Key.Item1).Min() >= topRightCorner[0];
-
-                var yCoordListBL = perimeterList.Where(e => e.Key.Item1 == bottomLeftCorner[0] && e.Key.Item2 < bottomLeftCorner[1] && (e.Value == "DR" || e.Value == "LR"));
-
-                bool bottomLeftYValid = yCoordListBL.Any() && yCoordListBL.Select(e => e.Key.Item2).Max() <= topRightCorner[1];
+                bool topRightXValid = topRightXValidInt != -1 && topRightXValidInt <= bottomLeftCorner[0];
+                bool topRightYValid = topRightYValidInt != -1 && topRightYValidInt >= bottomLeftCorner[1];
+                bool bottomLeftXValid = bottomLeftXValidInt != -1 && bottomLeftXValidInt >= topRightCorner[0];
+                bool bottomLeftYValid = bottomLeftYValidInt != -1 && bottomLeftYValidInt <= topRightCorner[1];
 
                 return topRightXValid && topRightYValid && bottomLeftXValid && bottomLeftYValid;
             }
