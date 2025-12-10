@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "US+GgEbU938=",
+  "dgSpecHash": "84f0EgHqSuY=",
   "success": true,
   "projectFilePath": "C:\\Users\\Zelda\\source\\repos\\Advent of Code 2025\\Advent of Code 2025\\Advent of Code 2025.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Zelda\\.nuget\\packages\\microsoft.z3\\4.12.2\\microsoft.z3.4.12.2.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -31,3 +31,11 @@ C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\ne
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day8test.txt
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day9.txt
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day9test.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day10.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day10test.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\libz3.dll
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Microsoft.Z3.dll
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\runtimes\osx-x64\native\libz3.dylib
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\runtimes\win-x64\native\libz3.dll
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\obj\Debug\net9.0\Advent of Code 2025.csproj.AssemblyReference.cache
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\obj\Debug\net9.0\Advent o.020BCE88.Up2Date
