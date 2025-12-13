@@ -41,3 +41,6 @@ C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\obj\Debug\ne
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\obj\Debug\net9.0\Advent o.020BCE88.Up2Date
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day11.txt
 C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day11test.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day11test2.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day12.txt
+C:\Users\Zelda\source\repos\Advent of Code 2025\Advent of Code 2025\bin\Debug\net9.0\Inputs\day12test.txt
